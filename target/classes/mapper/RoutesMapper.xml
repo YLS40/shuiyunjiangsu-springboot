@@ -1,0 +1,75 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.RoutesMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Routes">
+        select * from `routes`
+        <where>
+            <if test="name != null"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <delete id="deleteById">
+        delete from `routes`
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Routes" useGeneratedKeys="true">
+        insert into `routes`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="days != null">days,</if>
+            <if test="tips != null">tips,</if>
+            <if test="content != null">content,</if>
+            <if test="img != null">img,</if>
+            <if test="location != null">location,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="latitude != null">latitude,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="days != null">#{days},</if>
+            <if test="tips != null">#{tips},</if>
+            <if test="content != null">#{content},</if>
+            <if test="img != null">#{img},</if>
+            <if test="location != null">#{location},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Routes">
+        update `routes`
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="days != null">
+                days = #{days},
+            </if>
+            <if test="tips != null">
+                tips = #{tips},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="location != null">
+                location = #{location},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

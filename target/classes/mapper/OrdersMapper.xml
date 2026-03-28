@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OrdersMapper">
+
+    <sql id="Base_Column_List">
+        id,order_no,name,tourism_img,tourism_price,tourism_id,num,total,user_id,time,pay_no,pay_time,status
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Orders">
+        select orders.*, user.name as userName from orders
+        left join user on orders.user_id = user.id
+            <where>
+            <if test="orderNo != null"> and orders.order_no like concat('%', #{orderNo}, '%')</if>
+            <if test="userId != null"> and orders.user_id = #{userId}</if>
+        </where>
+        order by orders.id desc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Orders">
+        select orders.*, user.name as userName from orders
+        left join user on orders.user_id = user.id
+        from orders
+        where orders.id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from orders
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Orders" useGeneratedKeys="true" keyProperty="id">
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="name != null">name,</if>
+            <if test="tourismImg != null">tourism_img,</if>
+            <if test="tourismPrice != null">tourism_price,</if>
+            <if test="tourismId != null">tourism_id,</if>
+            <if test="num != null">num,</if>
+            <if test="total != null">total,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="time != null">time,</if>
+            <if test="payNo != null">pay_no,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="name != null">#{name},</if>
+            <if test="tourismImg != null">#{tourismImg},</if>
+            <if test="tourismPrice != null">#{tourismPrice},</if>
+            <if test="tourismId != null">#{tourismId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="total != null">#{total},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="time != null">#{time},</if>
+            <if test="payNo != null">#{payNo},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Orders">
+        update orders
+        <set>
+            <if test="orderNo != null">
+                order_no = #{orderNo},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="tourismImg != null">
+                tourism_img = #{tourismImg},
+            </if>
+            <if test="tourismPrice != null">
+                tourism_price = #{tourismPrice},
+            </if>
+            <if test="tourismId != null">
+                tourism_id = #{tourismId},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="total != null">
+                total = #{total},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="payNo != null">
+                pay_no = #{payNo},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
